@@ -5,6 +5,7 @@ History.txt
 lib/rails-crud_actions.rb
 Manifest.txt
 PostInstall.txt
+rails-crud_actions.gemspec
 Rakefile
 README.rdoc
 spec/rails-crud_actions_spec.rb
