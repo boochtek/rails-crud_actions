@@ -1,0 +1,62 @@
+= rails-crud_actions
+
+* http://github.com/boochtek/rails-crud_actions
+
+== DESCRIPTION:
+
+Provides default CRUD actions for a Rails controller.
+
+== FEATURES/PROBLEMS:
+
+* Provides default CRUD actions for a Rails controller.
+* Simply include the module, for simpler debugging.
+* Allows overriding the actions.
+* Provides the 7 CRUD actions provided by Rails scaffolding, plus 'delete'.
+  * Delete displays a page confirming that the user wants to delete an item.
+
+== SYNOPSIS:
+
+  class UsersController < ApplicationController
+    include BoochTek::Rails::CrudActions
+    crud_model = Person       # OPTIONAL: would have defaulted to User for the UsersController.
+    def index
+      # Can provide an overrided version of an action.
+    end
+    after_filter :only => :show do
+      # Can extend the functionality of the default version of an action. Can also use before_filter or around_filter.
+    end
+  end
+
+== REQUIREMENTS:
+
+* Rails (actually, ActionController)
+  * Will probably work with any version of Rails, but I've tested with Rails 2.2 and above.
+
+== INSTALL:
+
+* sudo gem install boochtek-rails-crud_actions -s http://gems.github.com
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2009 BoochTek, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

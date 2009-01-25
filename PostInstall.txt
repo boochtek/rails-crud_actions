@@ -1,0 +1,3 @@
+
+For more information on rails-crud_actions, see http://github.com/boochtek/rails-crud_actions
+
