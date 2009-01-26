@@ -2,6 +2,7 @@ features/development.feature
 features/steps/common.rb
 features/steps/env.rb
 History.txt
+init.rb
 lib/rails-crud_actions.rb
 Manifest.txt
 PostInstall.txt

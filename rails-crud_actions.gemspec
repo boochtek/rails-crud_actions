@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rails-crud_actions}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Craig Buchek"]
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{Provides default CRUD actions for a Rails controller.}
   s.email = ["craig@boochtek.com"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "PostInstall.txt", "README.rdoc"]
-  s.files = ["features/development.feature", "features/steps/common.rb", "features/steps/env.rb", "History.txt", "lib/rails-crud_actions.rb", "Manifest.txt", "PostInstall.txt", "rails-crud_actions.gemspec", "Rakefile", "README.rdoc", "spec/rails-crud_actions_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/rspec.rake", "tmp/tests.out"]
+  s.files = ["features/development.feature", "features/steps/common.rb", "features/steps/env.rb", "History.txt", "init.rb", "lib/rails-crud_actions.rb", "Manifest.txt", "PostInstall.txt", "rails-crud_actions.gemspec", "Rakefile", "README.rdoc", "spec/rails-crud_actions_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/rspec.rake", "tmp/tests.out"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/boochtek/rails-crud_actions}
   s.post_install_message = %q{PostInstall.txt}
