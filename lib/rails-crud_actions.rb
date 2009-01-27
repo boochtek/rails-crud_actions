@@ -14,7 +14,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 module BoochTek
   module Rails
     module CrudActions
-      VERSION = '0.0.3'
+      VERSION = '0.0.4'
 
       def self.included(base)
         base.class_eval do
