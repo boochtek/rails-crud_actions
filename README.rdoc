@@ -2,23 +2,25 @@
 
 * http://github.com/boochtek/rails-crud_actions
 
-== DESCRIPTION:
+== DESCRIPTION
 
 Provides default CRUD actions for a Rails controller.
 
-== FEATURES/PROBLEMS:
+== FEATURES/PROBLEMS
 
 * Provides default CRUD actions for a Rails controller.
 * Simply include the module, for simpler debugging.
 * Allows overriding the actions.
-* Provides the 7 CRUD actions provided by Rails scaffolding, plus 'delete'.
+* Provides the 7 CRUD actions provided by Rails scaffolding/resources, plus 'delete'.
   * Delete displays a page confirming that the user wants to delete an item.
 
-== SYNOPSIS:
+== SYNOPSIS
 
   class UsersController < ApplicationController
     include BoochTek::Rails::CrudActions
-    crud_model = Person       # OPTIONAL: would have defaulted to User for the UsersController.
+    crud_model Person       # OPTIONAL: would have defaulted to User for the UsersController.
+    crud_scope :conditions => {:name => 'Bill'}
+
     def index
       # Can provide an overrided version of an action.
     end
@@ -27,16 +29,39 @@ Provides default CRUD actions for a Rails controller.
     end
   end
 
-== REQUIREMENTS:
+OR
+
+  class UsersController < ApplicationController
+    crud_actions :model => Person, :conditions => {:name => 'Bill'}
+
+    def index
+      # Can provide an overrided version of an action.
+    end
+    after_filter :only => :show do
+      # Can extend the functionality of the default version of an action. Can also use before_filter or around_filter.
+    end
+  end
+
+You should set your routes up like this, so that your delete actions are at users/1/delete instead of users/delete/1:
+
+  map.resources :users, :member => { :delete => :get }
+
+== REQUIREMENTS
 
 * Rails (actually, ActionController)
   * Will probably work with any version of Rails, but I've tested with Rails 2.2 and above.
 
-== INSTALL:
+== INSTALL
 
-* sudo gem install boochtek-rails-crud_actions -s http://gems.github.com
+  script/plugin install git://github.com/boochtek/rails-crud_actions.git
 
-== LICENSE:
+== ALTERNATIVES
+
+  * resource_controller - I didn't like their DSL, which seems more magical than this implementation.
+  * josevalim-inherited_resources - Looks OK, but hard to override actions, and has to be included via inheritance.
+    * Uses 'resource' where I use 'item'; claims other "resourceful plugins" probably do as well.
+
+== LICENSE
 
 (The MIT License)
 
