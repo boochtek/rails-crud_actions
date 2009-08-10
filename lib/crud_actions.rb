@@ -90,6 +90,11 @@ module BoochTek
           before_filter :crud_collection, :only => [:index]
           before_filter :crud, :only => [:show, :new, :edit, :delete, :create, :update, :destroy]
           helper_method :crud, :crud_collection # Make sure these are visible to the view.
+
+          # Make all 8 of the default methods of the controller call the CRUD versions by default, while making it easy to override them.
+          %w{index show new edit delete create update destroy}.each do | meth |
+            alias_method "crud_#{meth}", meth # FIXME: Make sure the caller can override all the standard methods (index, show, etc.) or we'll have to use define_method.
+          end
         end
       end
 
@@ -100,11 +105,6 @@ module BoochTek
       end
 
       module InstanceMethods
-        # Make all 8 of the default methods of the controller call the CRUD versions by default, while making it easy to override them.
-        %w{index show new edit delete create update destroy}.each do | meth |
-          alias_method "crud_#{meth}", meth # FIXME: Make sure the caller can override all the standard methods (index, show, etc.) or we'll have to use define_method.
-        end
-
         def crud_index
           crud_collection.find_items
         end
