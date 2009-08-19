@@ -1,0 +1,39 @@
+BUGS
+====
+It looks like the offset is wrong for the default case:
+    SELECT * FROM "things" ORDER BY id LIMIT 5 OFFSET -5
+
+
+TODO
+====
+CrudContainer should act as a proxy for the contained item, so we don't have to do crud.item or crud_collection.items.
+    See http://railstips.org/2009/8/7/patterns-are-not-scary-method-missing-proxy for best practice on how to accomplish this.
+    Might want to mirror his pagination proxy as well.
+How can we add conditions like "age >= 13"?
+Add generators for scaffold/crud/resources.
+Allow caller to decide whether to redirect to the show action or the index action on save.
+Pagination tweaks.
+    Create accessors to get/set items_per_page, first_item_index, last_item_index, last_page, total_item_count.
+        Perhaps a light-weight object (Struct).
+    Set default ITEMS_PER_PAGE to 100 or something.
+    Test controller- and user-specified items_per_page.
+See if we can make use of url(:this) anywhere.
+Complex filtering of index, for searching. (Similar to Justin's solution.)
+    @crud_collection = @crud_collection.scoped(new_filtering_scope)
+Allow add_xyz and delete_xyz to be passed in from a form, for nested models/forms.
+    Should add or delete the sub-item, and re-send them to the (still populated) form.
+    Should be a fallback for when JS isn't available on the client.
+        If we get those buttons in the POST (update/create) then re-show the page instead of redirecting to the show/index page.
+    Should be an option: crud_actions :subitems => [:xyz, :abc]
+        This example would create these actions: add_xyz, delete_xyz, add_abc, delete_abc (for AJAX, or do we need the actions at all?)
+Should we require use of call to 'crud_actions', and disallow directly including the module?
+    This would allow us to remove the (protected) setter version of crud_options.
+Apparently, Rails doesn't allow POSTing to :controller/new or :controller/:id/edit. Don't see why it shouldn't allow that.
+Testing.
+Setting ownership of newly created items.
+    Perhaps just using a before_filter will do the trick.
+Make sure it works with crud_actions :scope => :all or crud_actions :model => Users.all
+    Note that the all method returns an Array(?) not a named scope.
+Should "item" be renamed as "record" or something else? Should "items" be "collection" or "records" or something else?
+    The inherited_resources author claims that "resource" should be commonly used. (http://giantrobots.thoughtbot.com/2009/8/3/before-filter-wisdom)
+        Also has collection for index action, and resource_class.
