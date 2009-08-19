@@ -174,11 +174,11 @@ module BoochTek
       end
 
       def new_item
-        self.item = self.model.new
+        @item = self.model.new
       end
 
       def find_item(id)
-        self.item = self.collection.find(id) # FIXME: Might find something not in the collection.
+        @item = self.collection.find(id) # FIXME: Might find something not in the collection.
       end
 
       def fill_item(params)
