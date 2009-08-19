@@ -6,6 +6,9 @@
 #   You should set your routes up like this:  map.resources :users, :member => { :delete => :get }
 #       So that your delete actions are at users/1/delete instead of users/delete/1.
 
+# TODO: CrudContainer should act as a proxy for the contained item, so we don't have to do crud.item or crud_collection.items.
+#           See http://railstips.org/2009/8/7/patterns-are-not-scary-method-missing-proxy for best practice on how to accomplish this.
+#           Might want to mirror his pagination proxy as well.
 # TODO: How can we add conditions like "age >= 13"?
 # TODO: Add generators for scaffold/crud/resources.
 # TODO: Allow caller to decide whether to redirect to the show action or the index action on save.
@@ -34,7 +37,8 @@
 # TODO: Make sure it works with crud_actions :scope => :all or crud_actions :model => Users.all
 #           Note that the all method returns an Array(?) not a named scope.
 # TODO: Should "item" be renamed as "record" or something else? Should "items" be "collection" or "records" or something else?
-#           inherited_resources author claims that "resource" should be commonly used. (http://giantrobots.thoughtbot.com/2009/8/3/before-filter-wisdom)
+#           The inherited_resources author claims that "resource" should be commonly used. (http://giantrobots.thoughtbot.com/2009/8/3/before-filter-wisdom)
+#               Also has collection for index action, and resource_class.
 
 
 # TODO: (Separate module- BoochTek::Form::Builder) - Richer form builder building blocks (labels come from field names, typed/constrained field types)
@@ -93,14 +97,16 @@ module BoochTek
 
           # Make all 8 of the default methods of the controller call the CRUD versions by default, while making it easy to override them.
           %w{index show new edit delete create update destroy}.each do | meth |
-            alias_method "crud_#{meth}", meth # FIXME: Make sure the caller can override all the standard methods (index, show, etc.) or we'll have to use define_method.
+            alias_method meth, "crud_#{meth}" # FIXME: Make sure the caller can override all the standard methods (index, show, etc.) or we'll have to use define_method.
           end
         end
       end
 
       module ClassMethods
-        def crud_options=(options={}) # Add options and/or return the options hash.
-          @crud_options.merge!(options)
+        def crud_options(model_class=nil, options={}) # Add options and/or return the options hash.
+          options = model_class if options == {} and model_class.is_a?(Hash)
+          options[:model] = model_class unless model_class.nil?
+          (@crud_options ||= {}).merge!(options)
         end
       end
 
