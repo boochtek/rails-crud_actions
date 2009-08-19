@@ -74,9 +74,9 @@
 
 module ActionController
   class Base
-    def self.crud_actions(options = {})
+    def self.crud_actions(model_class=nil, options={})
       include BoochTek::Rails::CrudActions
-      crud_options options
+      crud_options model_class, options
     end
   end
 end
